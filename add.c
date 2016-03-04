@@ -31,9 +31,14 @@ void sync_add(long long *pointer, long long value)
 {
 }
 
-void add(long long *pointer, long long value, int add_type)
+void *add(void *args_ptr)
 {
-	switch(value)
+	add_args_t *arg_struct = (add_args_t *)args_ptr;
+	long long *ptr = arg_struct->ptr;
+	long long value = arg_struct->value;
+	int add_type = arg_struct->add_type;
+
+	switch(add_type)
 	{
 		case BASIC_ADD:
 			basic_add(pointer, value);

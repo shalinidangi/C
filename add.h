@@ -7,6 +7,13 @@
 #define SPINLK_ADD		3
 #define SYNC_ADD		4
 
+typedef struct add_args
+{
+	long long *ptr;
+	long long value;
+	int add_type;
+} add_args_t;
+
 void add(long long *pointer, long long value, int add_type);
 
 
