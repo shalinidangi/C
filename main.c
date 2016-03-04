@@ -1,4 +1,6 @@
 #include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "add.h"
 #include "parse.h"
 
