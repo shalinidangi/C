@@ -14,7 +14,7 @@ typedef struct add_args
 	int add_type;
 } add_args_t;
 
-void add(long long *pointer, long long value, int add_type);
+void *add(void *args_ptr);
 
 
 #endif // ADD_H_

@@ -34,7 +34,7 @@ void sync_add(long long *pointer, long long value)
 void *add(void *args_ptr)
 {
 	add_args_t *arg_struct = (add_args_t *)args_ptr;
-	long long *ptr = arg_struct->ptr;
+	long long *pointer = arg_struct->ptr;
 	long long value = arg_struct->value;
 	int add_type = arg_struct->add_type;
 

@@ -20,10 +20,10 @@ int main()
 	int i;
 	for(i = 0; i < nthreads; i++)
 	{
-		add_args_t args;
-		args.ptr = ptr;
-		args.value = value;
-		args.add_type = add_type;
+		add_args_t* args;
+		args->ptr = ptr;
+		args->value = value;
+		args->add_type = add_type;
 
 		int success = pthread_create(&threads[i], NULL, add, (void *)args);
 
