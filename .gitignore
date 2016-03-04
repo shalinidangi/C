@@ -1,0 +1,9 @@
+# ignore all executable files
+*.o 
+*.so 
+*.so.*
+addtest
+sltest
+
+# ignore zip files
+*.tar.gz

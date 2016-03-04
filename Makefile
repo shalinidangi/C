@@ -18,5 +18,5 @@ lab1-KatherineAspinwallShaliniDangi.tar.gz:
 	tar -czf $@ $(SOURCES)
 
 clean:
-	rm -f *.o *.so *.so.* simpsh lab1-KatherineAspinwallShaliniDangi.tar.gz
+	rm -f *.o *.so *.so.* addtest sltest lab4-KatherineAspinwallShaliniDangi.tar.gz
 
