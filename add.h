@@ -5,7 +5,7 @@
 #define EXTD_ADD 		1
 #define MUTEX_ADD		2
 #define SPINLK_ADD		3
-#define SYNC_ADD		4
+#define ATOMIC_ADD		4
 
 typedef struct add_args
 {

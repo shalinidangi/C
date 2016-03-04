@@ -4,25 +4,27 @@
 #include "add.h"
 #include "parse.h"
 
-int main()
+int main(int argc, char **argv)
 {
-	// TACO - delete these variables
-	// placeholders for compilation - should actually get values from parsing
-	int nthreads; 
-	long long *ptr;
-	long long value;
-	int add_type;
+	// TACO - delete this variable
+	// placeholder for compilation - should actually determine add_type based on parsing results
+	int add_type = 0;
 	// ENDTACO
 
+	long long result;
+	long long *ptr = &result;
+
+	parse(argc, argv);
+
 	// allocate array to hold threads
-	pthread_t *threads = malloc(sizeof(pthread_t) * nthreads);
+	pthread_t *threads = malloc(sizeof(pthread_t) * n_threads);
 
 	int i;
-	for(i = 0; i < nthreads; i++)
+	for (i = 0; i < n_threads; i++)
 	{
 		add_args_t* args;
 		args->ptr = ptr;
-		args->value = value;
+		args->value = n_iters;
 		args->add_type = add_type;
 
 		int success = pthread_create(&threads[i], NULL, add, (void *)args);

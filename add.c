@@ -27,7 +27,7 @@ void spinlk_add(long long *pointer, long long value)
 {
 }
 
-void sync_add(long long *pointer, long long value)
+void atomic_add(long long *pointer, long long value)
 {
 }
 
@@ -56,7 +56,7 @@ void *add(void *args_ptr)
 		case EXTD_ADD:		addFxn = &extd_add;		break;
 		case MUTEX_ADD: 	addFxn = &mutex_add;	break;
 		case SPINLK_ADD:	addFxn = &spinlk_add;	break;
-		case SYNC_ADD:		addFxn = &sync_add;		break;
+		case ATOMIC_ADD:	addFxn = &atomic_add;	break;
 	}
 
 	*pointer = 0;
