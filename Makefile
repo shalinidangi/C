@@ -8,7 +8,7 @@ SOURCES = main.c parse.c add.c parse.h add.h Makefile README.md
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-simpsh: $(OBJ)
+addtest: $(OBJ)
 	gcc $(CFLAGS) -o $@ $^
 
 #check: 
