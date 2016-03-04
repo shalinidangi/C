@@ -1,5 +1,6 @@
 #include <getopt.h>
 #include <errno.h>
+#include "parse.h"
 
 void parse(int argc, char **argv)
 {
