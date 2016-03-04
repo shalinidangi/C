@@ -1,4 +1,7 @@
+#define _GNU_SOURCE             
+#include <pthread.h>
 #include "add.h"
+
 int opt_yield;
 
 void basic_add(long long *pointer, long long value)
@@ -7,11 +10,12 @@ void basic_add(long long *pointer, long long value)
     *pointer = sum;
 }
 
-void add(long long *pointer, long long value)
+void extd_add(long long *pointer, long long value)
 {
     long long sum = *pointer + value;
-    if (opt_yield)
+    if (opt_yield) {
         pthread_yield();
+    }
     *pointer = sum;
 }
 
@@ -35,7 +39,7 @@ void add(long long *pointer, long long value, int add_type)
 			basic_add(pointer, value);
 			break;
 		case EXTD_ADD:
-			add(pointer, value);
+			extd_add(pointer, value);
 			break;
 		case MUTEX_ADD:
 			mutex_add(pointer, value);

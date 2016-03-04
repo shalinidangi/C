@@ -1,11 +1,13 @@
 #include <getopt.h>
 #include <errno.h>
+#include <stdlib.h>
 #include "parse.h"
 
 void parse(int argc, char **argv)
 {
 	while (1)
 	{
+		int result;
 		int threads = 1;
 		int iters = 1;
 		// Add more long options as we progress.
@@ -15,6 +17,8 @@ void parse(int argc, char **argv)
 			{"iterations", required_argument, 0, 'i'},
 			{0, 0, 0, 0}
 		};
+
+		int option_index = 0;
 
 		// Parse command line options until there are none remaining
 		// getopt_long will return -1 when it is finished.
@@ -28,7 +32,7 @@ void parse(int argc, char **argv)
 			{
 				char *ptr;
 				int ret;
-				ret = strtol(optArg, &ptr, 10);
+				ret = strtol(optarg, &ptr, 10);
 				threads = ret;
 				break;
 			}
@@ -36,7 +40,7 @@ void parse(int argc, char **argv)
 			{
 				char *ptr;
 				int ret;
-				ret = strtol(optArg, &ptr, 10);
+				ret = strtol(optarg, &ptr, 10);
 				iters = ret;
 				break;
 			}
