@@ -31,29 +31,40 @@ void sync_add(long long *pointer, long long value)
 {
 }
 
+/* 
+	ADD WRAPPER FUNCTION 
+	- 	Takes a pointer to the struct with arguments 
+		to pass to add() 
+	- 	Determines which version of add() to call
+	-	Calls add(1) *value* times and add(-1) *value* times
+*/
 void *add(void *args_ptr)
 {
+	// get parameters from argument struct
 	add_args_t *arg_struct = (add_args_t *)args_ptr;
 	long long *pointer = arg_struct->ptr;
 	long long value = arg_struct->value;
 	int add_type = arg_struct->add_type;
 
-	switch(add_type)
+	// create function pointer for add()
+	void (*addFxn) (long long *, long long);
+
+	// make addFxn point to correct function
+	switch (add_type)
 	{
-		case BASIC_ADD:
-			basic_add(pointer, value);
-			break;
-		case EXTD_ADD:
-			extd_add(pointer, value);
-			break;
-		case MUTEX_ADD:
-			mutex_add(pointer, value);
-			break;
-		case SPINLK_ADD:
-			spinlk_add(pointer, value);
-			break;
-		case SYNC_ADD:
-			sync_add(pointer, value);
-			break;
+		case BASIC_ADD: 	addFxn = &basic_add; 	break; 
+		case EXTD_ADD:		addFxn = &extd_add;		break;
+		case MUTEX_ADD: 	addFxn = &mutex_add;	break;
+		case SPINLK_ADD:	addFxn = &spinlk_add;	break;
+		case SYNC_ADD:		addFxn = &sync_add;		break;
 	}
+
+	*pointer = 0;
+
+	int i;
+	for (i = 0; i < value; i++)
+		addFxn(pointer, 1);
+
+	for (i = 0; i < value; i++)
+		addFxn(pointer, -1);
 }
