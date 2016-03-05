@@ -6,13 +6,17 @@
 
 int main(int argc, char **argv)
 {
-	// TACO - delete this variable
-	// placeholder for compilation - should actually determine add_type based on parsing results
-	int add_type = 0;
-	// ENDTACO
+	int add_type;
+
+	switch (sync_type)
+	{
+		case MUTEX_SYNC:	add_type = MUTEX_ADD;	break;
+		case SPINLK_SYNC:	add_type = SPINLK_ADD;	break;
+		case ATOMIC_SYNC:	add_type = ATOMIC_ADD;	break;
+		default: 			add_type = EXTD_ADD;	
+	}
 
 	long long result;
-	long long *ptr = &result;
 
 	parse(argc, argv);
 
@@ -23,7 +27,7 @@ int main(int argc, char **argv)
 	for (i = 0; i < n_threads; i++)
 	{
 		add_args_t* args;
-		args->ptr = ptr;
+		args->ptr = &result;
 		args->value = n_iters;
 		args->add_type = add_type;
 
