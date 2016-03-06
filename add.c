@@ -32,17 +32,27 @@ void spinlk_add(long long *pointer, long long value)
 {
 }
 
+/* ================= ATOMIC ADD ====================
+	- 	Compare value of orig to *pointer. If they match,
+ 		set *pointer = sum.
+ 	-	If the value doesn't match, reattempt until it matches
+ 		and we actually do the swap. 
+ =================================================== */
 void atomic_add(long long *pointer, long long value)
 {
+	do
+	{
+		int orig = *pointer; 
+		int sum = orig + value;
+	} while (_sync_val_compare_and_swap(pointer, orig, sum) != orig)
 }
 
-/* 
-	ADD WRAPPER FUNCTION 
+/* ================= ADD WRAPPER ===================
 	- 	Takes a pointer to the struct with arguments 
 		to pass to add() 
 	- 	Determines which version of add() to call
 	-	Calls add(1) *value* times and add(-1) *value* times
-*/
+ =================================================== */
 void *add(void *args_ptr)
 {
 	// get parameters from argument struct
