@@ -45,11 +45,12 @@ void spinlk_add(long long *pointer, long long value)
  =================================================== */
 void atomic_add(long long *pointer, long long value)
 {
+	int orig, sum;
 	do
 	{
-		int orig = *pointer; 
-		int sum = orig + value;
-	} while (_sync_val_compare_and_swap(pointer, orig, sum) != orig)
+		orig = *pointer; 
+		sum = orig + value;
+	} while (__sync_val_compare_and_swap(pointer, orig, sum) != orig);
 }
 
 /* ================= ADD WRAPPER ===================
