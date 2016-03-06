@@ -4,6 +4,7 @@
 
 int opt_yield;
 pthread_mutex_t mutex_lock;
+volatile int lock_m = 0;
 
 void basic_add(long long *pointer, long long value)
 {
@@ -30,6 +31,10 @@ void mutex_add(long long *pointer, long long value)
 
 void spinlk_add(long long *pointer, long long value)
 {
+	while (__sync_lock_test_and_set(&lock_m, 1)); 
+	long long sum = *pointer + value; 
+	*pointer = sum; 
+	__sync_lock_release(&lock_m);
 }
 
 void atomic_add(long long *pointer, long long value)
