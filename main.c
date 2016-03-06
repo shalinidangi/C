@@ -16,8 +16,16 @@ int main(int argc, char **argv)
 		default: 			add_type = EXTD_ADD;	
 	}
 
-	long long result;
+	if (add_type == MUTEX_ADD)
+	{
+		if (pthread_mutex_init(&mutex_lock, NULL) != 0)
+	    {
+	        fprintf(stderr, "\n ERROR: mutex init failed\n");
+	        exit(EXIT_FAILURE);
+	    }
+	}
 
+	long long result;
 	parse(argc, argv);
 
 	// allocate array to hold threads
@@ -42,5 +50,7 @@ int main(int argc, char **argv)
 		pthread_join(threads[i], NULL);
 	}
 
+	if (add_type == MUTEX_ADD)
+		pthread_mutex_destroy(&mutex_lock);
 
 }

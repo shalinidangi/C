@@ -7,6 +7,8 @@
 #define SPINLK_ADD		3
 #define ATOMIC_ADD		4
 
+extern pthread_mutex_t mutex_lock;
+
 typedef struct add_args
 {
 	long long *ptr;		// ptr to add value to 		

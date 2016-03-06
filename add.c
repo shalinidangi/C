@@ -3,6 +3,7 @@
 #include "add.h"
 
 int opt_yield;
+pthread_mutex_t mutex_lock;
 
 void basic_add(long long *pointer, long long value)
 {
@@ -21,6 +22,10 @@ void extd_add(long long *pointer, long long value)
 
 void mutex_add(long long *pointer, long long value)
 {
+	pthread_mutex_lock(&mutex_lock);
+	long long sum = *pointer + value;
+	*pointer = sum;
+	pthread_mutex_unlock(&mutex_lock);
 }
 
 void spinlk_add(long long *pointer, long long value)
@@ -58,7 +63,7 @@ void *add(void *args_ptr)
 		case SPINLK_ADD:	addFxn = &spinlk_add;	break;
 		case ATOMIC_ADD:	addFxn = &atomic_add;	break;
 	}
-
+		
 	*pointer = 0;
 
 	int i;
