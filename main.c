@@ -27,6 +27,14 @@ int main(int argc, char **argv)
 	    }
 	}
 
+	// print number of operations
+	long num_ops = n_threads * n_iters * 2;
+
+	fprintf(stdout, "%d threads x %d iterations x (add + subtract) = %ld operations\n",
+		n_threads,
+		n_iters,
+		num_ops);
+
 	// allocate array to hold threads
 	pthread_t *threads = malloc(sizeof(pthread_t) * n_threads);
 
@@ -49,7 +57,10 @@ int main(int argc, char **argv)
 		pthread_join(threads[i], NULL);
 	}
 
+
 	if (add_type == MUTEX_ADD)
 		pthread_mutex_destroy(&mutex_lock);
 
+	if (result != 0)
+		fprintf(stderr, "ERROR: final count = %lld\n", result);
 }
