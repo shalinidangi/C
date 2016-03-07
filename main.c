@@ -7,6 +7,8 @@
 int main(int argc, char **argv)
 {
 	int add_type;
+	long long result;
+	parse(argc, argv);
 
 	switch (sync_type)
 	{
@@ -25,25 +27,22 @@ int main(int argc, char **argv)
 	    }
 	}
 
-	long long result;
-	parse(argc, argv);
-
 	// allocate array to hold threads
 	pthread_t *threads = malloc(sizeof(pthread_t) * n_threads);
 
 	int i;
 	for (i = 0; i < n_threads; i++)
 	{
-		add_args_t* args;
-		args->ptr = &result;
-		args->value = n_iters;
-		args->add_type = add_type;
+		add_args_t args;
+		args.ptr = &result;
+		args.value = n_iters;
+		args.add_type = add_type;
 
-		int success = pthread_create(&threads[i], NULL, add, (void *)args);
+		int failure = pthread_create(&threads[i], NULL, add, (void *)(&args));
 
-		if(!success)
+		if(failure)
 		{
-			fprintf(stderr,"ERROR: pthread_create() returned: %d\n", success);
+			fprintf(stderr,"ERROR: pthread_create() returned: %d\n", failure);
          	exit(EXIT_FAILURE);
 		}
 
