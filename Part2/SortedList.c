@@ -1,3 +1,5 @@
+#include "SortedList.h"
+#include <string.h>
 
 // insert node in list while maintaining ascending order in list  
 void SortedList_insert(SortedList_t *list, SortedListElement_t *element) 
@@ -84,6 +86,9 @@ int SortedList_length(SortedList_t *list)
 	return count;
 }
 
-
+int main()
+{
+	return 0;
+}
 
 
