@@ -13,10 +13,10 @@ addtest: $(OBJ)
 
 #check: 
 
-dist: check lab1-KatherineAspinwallShaliniDangi.tar.gz
-lab1-KatherineAspinwallShaliniDangi.tar.gz:
+#dist: check lab4-KatherineAspinwallShaliniDangi.tar.gz
+lab14-KatherineAspinwallShaliniDangi.tar.gz:
 	tar -czf $@ $(SOURCES)
 
 clean:
-	rm -f *.o *.so *.so.* addtest sltest lab4-KatherineAspinwallShaliniDangi.tar.gz
+	rm -f *.o *.so *.so.* addtest lab4-KatherineAspinwallShaliniDangi.tar.gz
 
