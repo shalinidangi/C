@@ -10,7 +10,7 @@ void SortedList_insert(SortedList_t *list, SortedListElement_t *element)
 	while (n != list) 
 	{ 
 		if (strcmp(element->key, n->key) <= 0) 
-		break; 
+			break; 
 		p = n; 
 		n = n->next; 
 	} 
@@ -21,11 +21,26 @@ void SortedList_insert(SortedList_t *list, SortedListElement_t *element)
 	n->prev = element; 
 } 
 
+SortedListElement_t *SortedList_lookup(SortedList_t *list, const char *key)
+{
+	SortedListElement_t *p = list;
+	SortedListElement_t *n = list->next; //first element 
+	// if list is empty, list->next = list 
+
+	while (n != list)
+	{
+		if (strcmp(key, n->key) == 0)
+			return n;
+		p = n;
+		n = n->next;
+	}
+
+	return NULL;
+}
+
  
 int SortedList_delete(SortedListElement_t *element) 
 { 
-	// call lookup function?
-
 	// actually do the deletion 
 	SortedListElement_t *n = element->next; 
 	SortedListElement_t *p = element->prev; 
@@ -41,3 +56,34 @@ int SortedList_delete(SortedListElement_t *element)
 	element->prev = NULL; 
 	return 0; 
 } 
+
+int SortedList_length(SortedList_t *list)
+{
+	int count = 0;
+
+	SortedListElement_t *p = list; // previous element
+	SortedListElement_t *c = list->next; //first/current element 
+	// if list is empty, list->next = list 
+	SortedListElement_t *n; // next element
+
+	while (c != list)
+	{
+		count++;
+		n = c->next;
+
+		// Check all prev/next pointers
+		if (n->prev != c) 
+			return -1; 
+		if (p->next != c) 
+			return -1;
+
+		p = c;
+		c = n;
+	}
+
+	return count;
+}
+
+
+
+
