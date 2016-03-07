@@ -3,6 +3,8 @@
 #include "SortedList.h"
 #include <string.h>
 
+int opt_yield;
+
 // insert node in list while maintaining ascending order in list  
 void SortedList_insert(SortedList_t *list, SortedListElement_t *element) 
 { 
