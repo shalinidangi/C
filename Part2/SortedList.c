@@ -1,3 +1,5 @@
+#define _GNU_SOURCE             
+#include <pthread.h>
 #include "SortedList.h"
 #include <string.h>
 
@@ -16,7 +18,11 @@ void SortedList_insert(SortedList_t *list, SortedListElement_t *element)
 		p = n; 
 		n = n->next; 
 	} 
+
+	if (opt_yield & INSERT_YIELD)
+		pthread_yield();
 	 
+	// insert an element
 	element->prev = p; 
 	element->next = n; 
 	p->next = element; 
@@ -48,10 +54,14 @@ int SortedList_delete(SortedListElement_t *element)
 	SortedListElement_t *p = element->prev; 
 	 
 	if (n->prev != element) 
-		return -1; 
+		return 1; 
 	if (p->next != element) 
 		return 1; 
 	 
+	if (opt_yield & DELETE_YIELD)
+		pthread_yield();
+
+	// delete the element
 	n->prev = p; 
 	p->next = n; 
 	element->next = NULL; 
