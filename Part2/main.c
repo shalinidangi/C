@@ -10,8 +10,12 @@
 #include "parse.h"
 #include "list.h"
 
+#define BILLION 1000000000L
+
 int main()
 {
+	struct timespec start, end;
+	
 	int list_type;
 	parse(argc, argv);
 
@@ -77,8 +81,6 @@ int main()
 
 	if (list_type == MUTEX_LIST)
 		pthread_mutex_destroy(&mutex_lock);
-
-	
 }
 
 
