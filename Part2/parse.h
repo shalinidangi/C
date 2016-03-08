@@ -15,10 +15,13 @@ void parse(int argc, char **argv);
 /*	================= OPTIONS ================== 
 	All the options we're parsing 
 	============================================ */
-	#define THREADS 	'a'
-	#define ITERATIONS 	'b'
-	#define YIELD		'c'
-	#define SYNC		'd'
+	#define THREADS 		'a'
+	#define ITERATIONS 		'b'
+	#define YIELD			'c'
+	#define SYNC			'd'
+	#define INSERT_YIELD	0x1
+	#define DELETE_YIELD	0x2
+	#define SEARCH_YIELD	0x4
 
 /*	================ CONSTANTS ================= 
 	Constants to help main interpret results 

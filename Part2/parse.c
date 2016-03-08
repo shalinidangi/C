@@ -1,12 +1,13 @@
 #include <getopt.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "parse.h"
 
 /* OPTIONS */
 int n_threads;
 int n_iters;
-int set_yield;
+int opt_yield;
 char sync_type;
 
 void parse(int argc, char **argv)
@@ -14,7 +15,7 @@ void parse(int argc, char **argv)
 	// initialize options to default values
 	n_threads = 1;
 	n_iters = 1;
-	set_yield = 0;
+	opt_yield = 0;
 	sync_type = NOSYNC;
 	
 	while (1)
@@ -57,6 +58,26 @@ void parse(int argc, char **argv)
 			// TACO: fix this - should be --yield=[ids]
 			case YIELD:
 			{
+				int i;
+				for(i = 0; i < 3; i++)
+				{
+					char c = optarg[0];
+
+					if (c == '\0')
+						break;
+					
+					if (c == 'i')
+						opt_yield |= INSERT_YIELD;
+					else if (c == 'd')
+						opt_yield |= DELETE_YIELD;
+					else if (c == 's')
+						opt_yield |= SEARCH_YIELD;
+					else // invalid argument 
+					{
+						fprintf(stderr, "ERROR: Invalid argument to --yield option\nFormat should be --yield[ids]\n");
+					}
+					
+				}
 				break;
 			}
 			case SYNC:
