@@ -23,10 +23,10 @@ void spinlk_list(void* args_ptr)
 
 /* ================= LIST WRAPPER ==================
  =================================================== */
-void list(void* args_ptr)
+void *list(void* args_ptr)
 {
 	// get parameters from argument struct
-	list_args_t *arg_struct = (lsit_args_t *)args_ptr;
+	list_args_t *arg_struct = (list_args_t *)args_ptr;
 
 	int list_type = arg_struct->list_type;
 
