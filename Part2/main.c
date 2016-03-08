@@ -1,7 +1,7 @@
 #define _GNU_SOURCE
 #include <pthread.h>
-#include <time.h>
-#include <math.h>
+#include <stdint.h>
+#include <sys/wait.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
