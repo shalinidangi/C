@@ -9,7 +9,7 @@ void parse(int argc, char **argv);
 	============================================ */
 	extern int n_threads;
 	extern int n_iters;
-	extern int set_yield;
+	extern int opt_yield;
 	extern char sync_type;
 
 /*	================= OPTIONS ================== 

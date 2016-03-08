@@ -55,7 +55,6 @@ void parse(int argc, char **argv)
 				break;
 			}
 
-			// TACO: fix this - should be --yield=[ids]
 			case YIELD:
 			{
 				int i;
@@ -66,17 +65,17 @@ void parse(int argc, char **argv)
 					if (c == '\0')
 						break;
 					
-					if (c == 'i')
-						opt_yield |= INSERT_YIELD;
-					else if (c == 'd')
-						opt_yield |= DELETE_YIELD;
-					else if (c == 's')
-						opt_yield |= SEARCH_YIELD;
-					else // invalid argument 
+					switch(c)
 					{
-						fprintf(stderr, "ERROR: Invalid argument to --yield option\nFormat should be --yield[ids]\n");
+						case 'i':
+							opt_yield |= INSERT_YIELD;	break;
+						case 'd':
+							opt_yield |= DELETE_YIELD;	break;
+						case 's':
+							opt_yield |= SEARCH_YIELD;	break;
+						default: // invalid argument
+							fprintf(stderr, "ERROR: Invalid argument to --yield option\nFormat should be --yield[ids]\n");
 					}
-					
 				}
 				break;
 			}
