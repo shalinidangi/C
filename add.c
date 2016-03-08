@@ -64,7 +64,7 @@ void *add(void *args_ptr)
 	// get parameters from argument struct
 	add_args_t *arg_struct = (add_args_t *)args_ptr;
 	long long *pointer = arg_struct->ptr;
-	long long value = arg_struct->value;
+	long long value = arg_struct->num_its;
 	int add_type = arg_struct->add_type;
 
 	// create function pointer for add()

@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	{
 		add_args_t args;
 		args.ptr = &result;
-		args.value = n_iters;
+		args.num_its = n_iters;
 		args.add_type = add_type;
 
 		int failure = pthread_create(&threads[i], NULL, add, (void *)(&args));
