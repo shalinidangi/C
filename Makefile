@@ -11,12 +11,9 @@ SOURCES = main.c parse.c add.c parse.h add.h Makefile README.md
 addtest: $(OBJ)
 	gcc $(CFLAGS) -o $@ $^
 
-#check: 
-
-#dist: check lab4-KatherineAspinwallShaliniDangi.tar.gz
-lab14-KatherineAspinwallShaliniDangi.tar.gz:
+lab4-part1-KatherineAspinwallShaliniDangi.tar.gz:
 	tar -czf $@ $(SOURCES)
 
 clean:
-	rm -f *.o *.so *.so.* addtest lab4-KatherineAspinwallShaliniDangi.tar.gz
+	rm -f *.o *.so *.so.* addtest lab4-part1-KatherineAspinwallShaliniDangi.tar.gz
 
