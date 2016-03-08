@@ -11,12 +11,9 @@ SOURCES = SortedList.c SortedList.h Makefile
 sltest: $(OBJ)
 	gcc $(CFLAGS) -o $@ $^
 
-#check: 
-
-#dist: check lab4-KatherineAspinwallShaliniDangi.tar.gz
-lab4-KatherineAspinwallShaliniDangi.tar.gz:
+lab4-part2-KatherineAspinwallShaliniDangi.tar.gz:
 	tar -czf $@ $(SOURCES)
 
 clean:
-	rm -f *.o *.so *.so.* sltest lab4-KatherineAspinwallShaliniDangi.tar.gz
+	rm -f *.o *.so *.so.* sltest lab4-part2-KatherineAspinwallShaliniDangi.tar.gz
 
