@@ -1,6 +1,6 @@
 OPTIMIZE= -O0
 CC = gcc
-CFLAGS = $(OPTIMIZE) -g3 -std=gnu11 -pthread
+CFLAGS = $(OPTIMIZE) -g3 -std=gnu11 -pthread -lrt
 DEPS = SortedList.h list.h parse.h
 OBJ = SortedList.o list.o parse.o main.o
 SOURCES = SortedList.c SortedList.h list.c list.h parse.c parse.h main.c Makefile

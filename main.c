@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <sys/wait.h>
+#include <time.h>
+
 #include "add.h"
 #include "parse.h"
 
