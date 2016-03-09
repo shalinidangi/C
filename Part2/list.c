@@ -43,12 +43,15 @@ void *list(void* args_ptr)
 	SortedListElement_t *elements = arg_struct->elements;
 
 	SortedList_t list;
+	list.next = &list;
+	list.prev = &list;
+	list.key = NULL;
 
 	// insert elements into list
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
-		// SortedList_insert(&list, &elements[i]);
+		SortedList_insert(&list, &elements[i]);
 		// printf("Key: %s\n", elements[i].key);
 	}
 
