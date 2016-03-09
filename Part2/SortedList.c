@@ -102,9 +102,4 @@ int SortedList_length(SortedList_t *list)
 	return count;
 }
 
-int main()
-{
-	return 0;
-}
-
 

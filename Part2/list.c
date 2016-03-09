@@ -5,7 +5,8 @@
 #include "SortedList.h"
 #include "list.h"
 
- 
+ pthread_mutex_t mutex_lock;
+
 /*============= CREATE LIST ELEMENTS ==============
 	* Returns a pointer to an array of 
 		SortedListElements

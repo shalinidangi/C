@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "parse.h"
+#include "SortedList.h"
 
 /* OPTIONS */
 int n_threads;
@@ -73,7 +74,7 @@ void parse(int argc, char **argv)
 							opt_yield |= DELETE_YIELD;	break;
 						case 's':
 							opt_yield |= SEARCH_YIELD;	break;
-						default: // invalid argument
+						default: // invalid argumentls
 							fprintf(stderr, "ERROR: Invalid argument to --yield option\nFormat should be --yield[ids]\n");
 					}
 				}

@@ -15,6 +15,7 @@ typedef struct list_args
 } list_args_t;
 
 void *list(void *args_ptr);
+SortedListElement_t *create_rand_list_elements(int n_elements);
 
 
 #endif // LIST_H_

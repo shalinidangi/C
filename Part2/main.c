@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 		list_args_t args;
 		args.num_its = n_iters;
 		args.list_type = list_type;
-		args.elements = elements[i * n_iters];
+		args.elements = &elements[i * n_iters];
 
 		int failure = pthread_create(&threads[i], NULL, list, (void *)(&args));
 
@@ -77,8 +77,8 @@ int main(int argc, char **argv)
 		n_iters,
 		num_ops);
 
-	if (result != 0)
-		fprintf(stderr, "ERROR: final count = %lld\n", result);
+	// if (result != 0)
+	// 	fprintf(stderr, "ERROR: final count = %lld\n", result);
 
 	fprintf(stdout, "elapsed time: %lld ns\n", diff);
 	fprintf(stdout, "per operation: %lld ns\n", diff/num_ops);
