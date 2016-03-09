@@ -52,9 +52,15 @@ void *list(void* args_ptr)
 	for (i = 0; i < num_its; i++)
 	{
 		SortedList_insert(&list, &elements[i]);
-		// printf("Key: %s\n", elements[i].key);
 	}
 
+	int len = SortedList_length(&list);
+
+	for (i = 0; i < num_its; i++)
+	{
+		SortedListElement_t *victim = SortedList_lookup(&list, elements[i].key);
+		SortedList_delete(victim);
+	}	
 }
 
 

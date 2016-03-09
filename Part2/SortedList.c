@@ -87,6 +87,8 @@ int SortedList_length(SortedList_t *list)
 
 	while (c != list)
 	{
+		n = c->next;
+
 		// Check all prev/next pointers
 		if (n->prev != c) 
 			return -1; 
@@ -94,7 +96,6 @@ int SortedList_length(SortedList_t *list)
 			return -1;
 
 		count++;
-		n = c->next;
 		p = c;
 		c = n;
 	}
