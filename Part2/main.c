@@ -13,6 +13,7 @@
 
 #define BILLION 1000000000L
 
+/*
 int main(int argc, char **argv)
 {
 	struct timespec start, end;
@@ -43,13 +44,15 @@ int main(int argc, char **argv)
 	pthread_t *threads = malloc(sizeof(pthread_t) * n_threads);
 
 	clock_gettime(CLOCK_MONOTONIC, &start);
+
 	int i;
 	for (i = 0; i < n_threads; i++)
 	{
 		list_args_t args;
 		args.num_its = n_iters;
 		args.list_type = list_type;
-		args.elements = &elements[i * n_iters];
+		// args.elements = &elements[i * n_iters];
+		args.elements = elements;
 
 		int failure = pthread_create(&threads[i], NULL, list, (void *)(&args));
 
@@ -87,6 +90,18 @@ int main(int argc, char **argv)
 	if (list_type == MUTEX_LIST)
 		pthread_mutex_destroy(&mutex_lock);
 }
+*/
 
+int main()
+{
+	SortedListElement_t e;
+	e.key = "bob";
 
+	SortedList_t l;
+	l.prev = NULL;
+	l.next = NULL;
+	l.key = NULL;
 
+	printf("No segfault yet\n");
+	SortedList_insert(&l, &e);	
+}

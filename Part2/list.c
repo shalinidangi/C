@@ -1,7 +1,7 @@
 #define _GNU_SOURCE
 #include <pthread.h>
 #include <stdlib.h>
-
+#include <stdio.h> // testing purposes
 #include "SortedList.h"
 #include "list.h"
 
@@ -29,6 +29,8 @@ SortedListElement_t *create_rand_list_elements (int n_elements)
 
 		arr[i] = element;
 	}
+
+	return arr;
 }
 
 /* ================= LIST WRAPPER ================== */
@@ -46,9 +48,12 @@ void *list(void* args_ptr)
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
-		SortedList_insert(&list, &elements[i]);
+		// SortedList_insert(&list, &elements[i]);
+		// printf("Key: %s\n", elements[i].key);
 	}
+
 }
+
 
 
 
