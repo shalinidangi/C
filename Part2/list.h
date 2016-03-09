@@ -9,8 +9,9 @@ extern pthread_mutex_t mutex_lock;
 
 typedef struct list_args
 {
-	int list_type;		// which list function to call
-	int num_its; 		// number of iterations
+	int list_type;					// which list function to call
+	int num_its; 					// number of iterations
+	SortedListElement_t *elements;	// array of elements to insert in list
 } list_args_t;
 
 void *list(void *args_ptr);

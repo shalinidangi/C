@@ -12,7 +12,7 @@
 
 #define BILLION 1000000000L
 
-int main()
+int main(int argc, char **argv)
 {
 	struct timespec start, end;
 	
@@ -21,7 +21,7 @@ int main()
 
 	switch (sync_type)
 	{
-		case MUTEX_SYNC:	list_type = MUTEX_LIST;	break;
+		case MUTEX_SYNC:	list_type = MUTEX_LIST;		break;
 		case SPINLK_SYNC:	list_type = SPINLK_LIST;	break;
 		default: 			list_type = BASIC_LIST;	
 	}
@@ -35,6 +35,9 @@ int main()
 	    }
 	}
 
+	// create array of preinitialized list elements
+	SortedListElement_t *elements = create_rand_list_elements(n_threads * n_iters);
+
 	// allocate array to hold threads
 	pthread_t *threads = malloc(sizeof(pthread_t) * n_threads);
 
@@ -45,6 +48,7 @@ int main()
 		list_args_t args;
 		args.num_its = n_iters;
 		args.list_type = list_type;
+		args.elements = elements[i * n_iters];
 
 		int failure = pthread_create(&threads[i], NULL, list, (void *)(&args));
 

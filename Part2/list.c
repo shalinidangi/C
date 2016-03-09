@@ -1,47 +1,52 @@
 #define _GNU_SOURCE
 #include <pthread.h>
+#include <stdlib.h>
 
 #include "SortedList.h"
 #include "list.h"
 
-void basic_list(void* args_ptr)
+ 
+/*============= CREATE LIST ELEMENTS ==============
+	* Returns a pointer to an array of 
+		SortedListElements
+	* Array will containing n_elements elements
+	* Each element has a randomly generated key
+=================================================*/													
+SortedListElement_t *create_rand_list_elements (int n_elements)
 {
+	SortedListElement_t *arr = (SortedListElement_t *)malloc(sizeof(SortedListElement_t) * n_elements);
 
+	int i;
+	for (i = 0; i < n_elements; i++)
+	{
+		// Generate a random key
+		char *key = "bob";	// TACO replace this with something more random than Bob
+
+		// Create a list element with that key
+		SortedListElement_t element;
+		element.key = key;
+
+		arr[i] = element;
+	}
 }
 
-
-void mutex_list(void* args_ptr)
-{
-
-}
-
-void spinlk_list(void* args_ptr)
-{
-
-}
-
-
-/* ================= LIST WRAPPER ==================
- =================================================== */
+/* ================= LIST WRAPPER ================== */
 void *list(void* args_ptr)
 {
 	// get parameters from argument struct
 	list_args_t *arg_struct = (list_args_t *)args_ptr;
-
 	int list_type = arg_struct->list_type;
+	int num_its = arg_struct->num_its;
+	SortedListElement_t *elements = arg_struct->elements;
 
-	// create function pointer for list()
-	void (*listFxn) (void *);
+	SortedList_t list;
 
-	// make listFxn point to correct function
-	switch (list_type)
+	// insert elements into list
+	int i;
+	for (i = 0; i < num_its; i++)
 	{
-		case BASIC_LIST: 	listFxn = &basic_list; 	break; 
-		case MUTEX_LIST: 	listFxn = &mutex_list;	break;
-		case SPINLK_LIST:	listFxn = &spinlk_list;	break;
+		SortedList_insert(&list, &elements[i]);
 	}
-
-	listFxn(args_ptr);
 }
 
 
