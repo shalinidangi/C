@@ -1,0 +1,37 @@
+=======================================================================  
+							QUESTIONS 1.1:  
+=======================================================================
+>>>>>>>> (1) Why does it take this many threads or iterations? <<<<<<<<
+Race conditions are more likely to occur if there are more threads running at the same time. These race conditions are the source of the error in the output. As the number of threads and the number of iterations increases, the global variables in the program are accessed and modified more often. This increases the likelihood that threads are going to write over each other and corrupt the value of the shared variables.
+ADD HOW MANY THREADS/ITERATIONS IT TOOK FOR US TO GET FAILURES
+
+>>>>>>>> (2) Why does a significantly smaller number of iterations so seldom fail? <<<<<<<<
+When there are fewer changes to the global variables, there’s a smaller probability of encountering synchronization errors with these variables (threads are less likely to overwrite each other when there are fewer writes). 
+
+=======================================================================  
+							QUESTIONS 1.2:  
+=======================================================================
+>>>>>>>> (1) Why does the average cost per operation drop with increasing iterations? <<<<<<<<
+The overhead of thread creation is the same regardless of the number of iterations each thread performs, so thread creation takes up a much larger fraction of the total cost when the number of iterations is small. When you add more iterations, the additions begin to dominate the amount of time the thread takes to run. Therefore, thread creation overhead becomes a much smaller factor and the total cost per operation decreases.
+
+>>>>>>>> (2) How do we know what the “correct” cost is? <<<<<<<<
+The “correct” cost can be calculated as the total cost minus the cost of thread creation.  This cost can be determined by timing the pthread_create() calls for each thread and subtracting this from the the total time. 
+
+>>>>>>>> (3) Why are the --yield runs so much slower? Where is the extra time going? <<<<<<<<
+Calling pthread_yield() results in a system call. This takes kernel time during which no other threads can run. Furthermore, we need to do a context switch when we switch threads, and this is a huge hit on performance
+
+>>>>>>>> (4) Can we get valid timings if we are using --yield? How, or why not? <<<<<<<<
+We cannot get valid timings if we are using --yield because we do not know how much time is being spent in the context switch. We cannot time the context switch because we do not know to which thread the pthread_yield() call is transferring control to.
+
+=======================================================================  
+							QUESTIONS 1.3:  
+=======================================================================
+>>>>>>>> (1) Why do all of the options perform similarly for low numbers of threads? <<<<<<<<
+When the number of threads is small, not too many threads are trying to gain access to a lock simultaneously, and so the wait period for a lock is much smaller.
+
+>>>>>>>> (2) Why do the three protected operations slow down as the number of threads rises? <<<<<<<<
+Protected operations lock certain critical sections of the code (meaning that only one thread can run code in these sections at a time). When there are more threads, threads running the mutex and spinlock versions of the add operation spend more time waiting for access to the lock. In the atomic add operation, the more threads there are, the more often the __sync_val_compare_and_swap method will fail, since there are more threads attempting to change the value of *pointer (overlapping writes) in between the first access to *pointer and the addition operation.
+
+>>>>>>>> (3) Why are spin-locks so expensive for large numbers of threads? <<<<<<<<
+Spinlocks essentially work by running a loop that repeatedly checks if the lock is available.  This busy waiting will waste CPU resources until the thread is preempted or the lock it is waiting on becomes available. For large numbers of threads, more time will be spent waiting for locks and therefore, more resources will be used.
+
