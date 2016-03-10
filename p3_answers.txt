@@ -1,0 +1,31 @@
+=======================================================================  
+							QUESTIONS 3.1:  
+=======================================================================
+>>>>>>>> (1) Why must the mutex be held when pthread_cond_wait is called? <<<<<<<<
+while(condition)
+	pthread_cond_wait(&cond_var, &m_lock);
+
+The mutex must be held when pthread_cond_wait is called in order to avoid the situation where the while condition changes after we have already entered the while loop and are putting the waiting thread to sleep. In that case, the thread has missed its chance to be awoken and will be blocked forever.  By holding the mutex, the waiting thread can ensure that no other thread will modify the while condition at this critical point.
+
+>>>>>>>> (2) Why must the mutex be released when the waiting thread is blocked? <<<<<<<<
+The mutex must be released when the waiting thread is blocked in order to allow other threads to run and as a result, to allow the while condition to change.  If the while condition never changes, the waiting thread will be blocked forever and the program will hang.
+
+>>>>>>>> (3) Why must the mutex be reacquired when the calling thread resumes? <<<<<<<<
+while(condition)
+	pthread_cond_wait(&cond_var, &m_lock);
+// calling thread resumes here
+
+The mutex must be reacquired when the calling thread resumes in order to ensure that the while condition does not change.  We don’t want other threads modifying anything that will make the while condition true.  If the condition is true, then the current thread should be blocked not running.
+
+>>>>>>>> (4) Why must this be done inside of pthread_cond_wait? Why can’t the caller simply release the mutex before calling pthread_cond_wait? <<<<<<<<
+while(condition) {
+	pthread_mutex_unlock(&m_lock);
+	pthread_cond_wait(&cond_var, &m_lock);
+}
+
+The mutex must be released inside of pthread_cond_wait to avoid the race condition where the while condition is changed right before we are about to block the thread.  It is possible that, in between the pthread_mutex_unlock call and the pthread_cond_wait call, another thread could modify something that changes the value of the while condition to false.  Once again, this would cause the blocked process to be blocked forever.
+
+>>>>>>>> (5) Can this be done in a user-mode implementation of pthread_cond_wait? If so, how? If it can only be implemented by a system call, explain why? <<<<<<<<
+
+COMPLETE THIS QUESTION
+
