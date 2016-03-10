@@ -17,11 +17,24 @@ SortedListElement_t *create_rand_list_elements (int n_elements)
 {
 	SortedListElement_t *arr = (SortedListElement_t *)malloc(sizeof(SortedListElement_t) * n_elements);
 
+	time_t t;
+	srand((unsigned) time(&t));
+
 	int i;
 	for (i = 0; i < n_elements; i++)
 	{
+		int len = rand() % 9;
+		len++;
+		
+		char* key = (char*)malloc(sizeof(char) * (len + 1));
+		
 		// Generate a random key
-		char *key = "bob";	// TACO replace this with something more random than Bob
+		int j;
+		for (j = 0; j < len; j++)
+		{
+			key[j] = (char)(rand() % 255);
+		}
+		key[j] = '\0';
 
 		// Create a list element with that key
 		SortedListElement_t element;
