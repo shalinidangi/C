@@ -8,6 +8,7 @@
 /* OPTIONS */
 int n_threads;
 int n_iters;
+int n_lists;
 int opt_yield;
 char sync_type;
 
@@ -16,6 +17,7 @@ void parse(int argc, char **argv)
 	// initialize options to default values
 	n_threads = 1;
 	n_iters = 1;
+	n_lists = 1;
 	opt_yield = 0;
 	sync_type = NOSYNC;
 	
@@ -30,6 +32,7 @@ void parse(int argc, char **argv)
 			{"iterations", 	required_argument, 	0,	ITERATIONS},
 			{"yield", 		required_argument, 	0, 	YIELD},
 			{"sync", 		required_argument, 	0, 	SYNC},
+			{"lists", 		required_argument, 	0, 	LISTS},
 			{0, 0, 0, 0}
 		};
 
@@ -86,6 +89,13 @@ void parse(int argc, char **argv)
 				if (c == MUTEX_SYNC || c == SPINLK_SYNC)
 					sync_type = c;
 			}
+			case LISTS:
+			{
+				char *ptr;
+				n_lists = strtol(optarg, &ptr, 10);
+				break;
+			}
+
 		}
 	}
 }

@@ -11,6 +11,7 @@ typedef struct list_args
 {
 	int list_type;					// which list function to call
 	int num_its; 					// number of iterations
+	int num_sublists;				// number of sublists to break the list into
 	SortedListElement_t *elements;	// array of elements to insert in list
 } list_args_t;
 

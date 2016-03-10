@@ -9,6 +9,7 @@ void parse(int argc, char **argv);
 	============================================ */
 	extern int n_threads;
 	extern int n_iters;
+	extern int n_lists;
 	extern int opt_yield;
 	extern char sync_type;
 
@@ -19,6 +20,7 @@ void parse(int argc, char **argv);
 	#define ITERATIONS 		'b'
 	#define YIELD			'c'
 	#define SYNC			'd'
+	#define LISTS 			'e'
 	// #define INSERT_YIELD	0x1
 	// #define DELETE_YIELD	0x2
 	// #define SEARCH_YIELD	0x4

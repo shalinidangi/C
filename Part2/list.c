@@ -2,10 +2,19 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h> // testing purposes
+#include <string.h>
 #include "SortedList.h"
 #include "list.h"
 
  pthread_mutex_t mutex_lock;
+
+int hash(char *key)
+{
+	int i = 0; hash = 7, len = strlen(key);
+
+	for (; i < len; i++)
+		hash = hash * 31 + key[i];
+}
 
 /*============= CREATE LIST ELEMENTS ==============
 	* Returns a pointer to an array of 
@@ -53,7 +62,10 @@ void *list(void* args_ptr)
 	list_args_t *arg_struct = (list_args_t *)args_ptr;
 	int list_type = arg_struct->list_type;
 	int num_its = arg_struct->num_its;
+	int num_lists = arg_struct->num_sublists;
 	SortedListElement_t *elements = arg_struct->elements;
+
+	// create n
 
 	SortedList_t list;
 	list.next = &list;
@@ -64,6 +76,7 @@ void *list(void* args_ptr)
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
+		int l = hash(&elements[i].key);	// which sublist to put element in 
 		SortedList_insert(&list, &elements[i]);
 	}
 

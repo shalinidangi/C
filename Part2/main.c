@@ -51,6 +51,7 @@ int main(int argc, char **argv)
 		args.num_its = n_iters;
 		args.list_type = list_type;
 		args.elements = &elements[i * n_iters];
+		args.num_sublists = n_lists;
 
 		int failure = pthread_create(&threads[i], NULL, list, (void *)(&args));
 
