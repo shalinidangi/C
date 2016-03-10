@@ -88,8 +88,9 @@ int main(int argc, char **argv)
 		n_iters,
 		num_ops);
 
-	// if (result != 0)
-	// 	fprintf(stderr, "ERROR: final count = %lld\n", result);
+	int len = SortedList_length(lists);
+	if (len != 0)
+		fprintf(stderr, "ERROR: final list length = %d\n", len);
 
 	fprintf(stdout, "elapsed time: %lld ns\n", diff);
 	fprintf(stdout, "per operation: %lld ns\n", diff/num_ops);

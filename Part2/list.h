@@ -7,6 +7,7 @@
 
 extern pthread_mutex_t* mutex_locks;
 extern volatile int* locks_m;
+extern SortedList_t* lists;
 
 typedef struct list_args
 {
