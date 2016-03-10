@@ -1,7 +1,8 @@
 #define _GNU_SOURCE             
 #include <pthread.h>
-#include "SortedList.h"
 #include <string.h>
+#include "parse.h"
+#include "SortedList.h"
 
 int opt_yield;
 
