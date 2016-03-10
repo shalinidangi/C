@@ -100,7 +100,7 @@ void *list(void* args_ptr)
 	SortedListElement_t *elements = arg_struct->elements;
 
 	// Create sublists
-	SortedList_t* lists;
+	SortedList_t* lists; // array of sublists
 	lists = (SortedList_t*)malloc(num_sublists * sizeof(SortedList_t));
 	int ix;
 	for (ix = 0; ix < num_sublists; ix++)

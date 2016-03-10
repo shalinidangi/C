@@ -1,7 +1,8 @@
 #define _GNU_SOURCE             
 #include <pthread.h>
-#include "SortedList.h"
 #include <string.h>
+#include "SortedList.h"
+#include "parse.h"
 
 int opt_yield;
 
@@ -75,31 +76,36 @@ SortedListElement_t *SortedList_lookup(SortedList_t *list, const char *key)
 
 int SortedList_length(SortedList_t *list)
 {
-	int count = 0;
+	int count = 0, i = 0;
+	SortedList_t *sublist;
 
-	SortedListElement_t *p = list; // previous element
-	SortedListElement_t *c = list->next; //first/current element 
-	// if list is empty, list->next = list 
-	SortedListElement_t *n; // next element
-
-	if (opt_yield & SEARCH_YIELD)
-		pthread_yield();
-
-	while (c != list)
+	for(; i < n_lists; i++)
 	{
-		n = c->next;
+		sublist = &list[i];
+		SortedListElement_t *p = sublist; // previous element
+		SortedListElement_t *c = sublist->next; //first/current element 
+		// if list is empty, list->next = list 
+		SortedListElement_t *n; // next element
 
-		// Check all prev/next pointers
-		if (n->prev != c) 
-			return -1; 
-		if (p->next != c) 
-			return -1;
+		if (opt_yield & SEARCH_YIELD)
+			pthread_yield();
 
-		count++;
-		p = c;
-		c = n;
+		while (c != sublist)
+		{
+			n = c->next;
+
+			// Check all prev/next pointers
+			if (n->prev != c) 
+				return -1; 
+			if (p->next != c) 
+				return -1;
+
+			count++;
+			p = c;
+			c = n;
+		}
 	}
-
+	
 	return count;
 }
 
