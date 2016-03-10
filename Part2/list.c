@@ -6,7 +6,8 @@
 #include "SortedList.h"
 #include "list.h"
 
- pthread_mutex_t mutex_lock;
+pthread_mutex_t* mutex_locks;
+volatile int* locks_m;
 
 int hash(const char *key)
 {
@@ -56,6 +57,38 @@ SortedListElement_t *create_rand_list_elements (int n_elements)
 	return arr;
 }
 
+void acquire_lock(int list_type, int sublist_ix)
+{
+	if (list_type == NOSYNC)
+	{
+		return;
+	}
+	else if (list_type == MUTEX_LIST)
+	{
+		pthread_mutex_lock(&mutex_locks[sublist_ix]);
+	}
+	else if (list_type == SPINLK_LIST)
+	{
+		while(__sync_lock_test_and_set(&locks_m[sublist_ix], 1));
+	}
+}
+
+void release_lock(int list_type, int sublist_ix)
+{
+	if (list_type == NOSYNC)
+	{
+		return;
+	}
+	else if (list_type == MUTEX_LIST)
+	{
+		pthread_mutex_unlock(&mutex_locks[sublist_ix]);
+	}
+	else if (list_type == SPINLK_LIST)
+	{
+		__sync_lock_release(&locks_m[sublist_ix]);
+	}
+}
+
 /* ================= LIST WRAPPER ================== */
 void *list(void* args_ptr)
 {
@@ -66,27 +99,48 @@ void *list(void* args_ptr)
 	int num_lists = arg_struct->num_sublists;
 	SortedListElement_t *elements = arg_struct->elements;
 
-	// create n
-
-	SortedList_t list;
-	list.next = &list;
-	list.prev = &list;
-	list.key = NULL;
+	// Create sublists
+	SortedList_t* lists;
+	lists = (SortedList_t*)malloc(num_sublists * sizeof(SortedList_t));
+	int ix;
+	for (ix = 0; ix < num_sublists; ix++)
+	{
+		lists[ix].prev = &lists[ix];
+  		lists[ix].next = &lists[ix];
+  		lists[ix].key = NULL;
+	}
 
 	// insert elements into list
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
 		int l = hash(elements[i].key) % num_lists;	// which sublist to put element in 
-		SortedList_insert(&list, &elements[i]);
+
+		acquire_lock(list_type, l);
+		SortedList_insert(&lists[l], &elements[i]);
+		release_lock(list_type, l);
 	}
 
-	int len = SortedList_length(&list);
+	int j;
+	for (j = 0; j < num_sublists; j++)
+	{
+		acquire_lock(list_type, j);
+	}
+	// TACO: re-implement _length to add up all sublists
+	int len = SortedList_length(lists);
+	for (j = 0; j < num_sublists; j++)
+	{
+		release_lock(list_type, j);
+	}
 
 	for (i = 0; i < num_its; i++)
 	{
-		SortedListElement_t *victim = SortedList_lookup(&list, elements[i].key);
+		int l = hash(elements[i].key) % num_lists;
+
+		acquire_lock(list_type, l);
+		SortedListElement_t *victim = SortedList_lookup(&lists[l], elements[i].key);
 		SortedList_delete(victim);
+		release_lock(list_type, l);
 	}	
 }
 

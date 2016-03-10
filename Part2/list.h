@@ -5,7 +5,8 @@
 #define MUTEX_LIST		1
 #define SPINLK_LIST		2
 
-extern pthread_mutex_t mutex_lock;
+extern pthread_mutex_t* mutex_locks;
+extern volatile int* locks_m;
 
 typedef struct list_args
 {

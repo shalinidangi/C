@@ -27,13 +27,21 @@ int main(int argc, char **argv)
 		default: 			list_type = BASIC_LIST;	
 	}
 
+	mutex_locks = (pthread_mutex_t*)malloc(n_lists * sizeof(pthread_mutex_t));
+
+	locks_m = (volatile int*)malloc(n_lists * sizeof(volatile int));
+
 	if (list_type == MUTEX_LIST)
 	{
-		if (pthread_mutex_init(&mutex_lock, NULL) != 0)
-	    {
-	        fprintf(stderr, "\n ERROR: mutex init failed\n");
-	        exit(EXIT_FAILURE);
-	    }
+		int ix;
+		for (ix = 0; ix < n_lists; ix++)
+		{
+			if (pthread_mutex_init(&mutex_locks[ix], NULL) != 0)
+			{
+				fprintf(stderr, "\n ERROR: mutex init failed\n");
+	        	exit(EXIT_FAILURE);
+			}
+		}
 	}
 
 	// create array of preinitialized list elements
@@ -88,5 +96,14 @@ int main(int argc, char **argv)
 
 	if (list_type == MUTEX_LIST)
 		pthread_mutex_destroy(&mutex_lock);
+
+	if (list_type == MUTEX_LIST)
+	{
+		int jx;
+		for (jx = 0; jx < n_lists; jx++)
+		{
+			pthread_mutex_destroy(&mutex_locks[ix]);
+		}
+	}
 }
 
