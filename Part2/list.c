@@ -8,9 +8,9 @@
 
  pthread_mutex_t mutex_lock;
 
-int hash(char *key)
+int hash(const char *key)
 {
-	int i = 0; hash = 7, len = strlen(key);
+	int i = 0, hash = 7, len = strlen(key);
 
 	for (; i < len; i++)
 		hash = hash * 31 + key[i];
@@ -76,7 +76,7 @@ void *list(void* args_ptr)
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
-		int l = hash(&elements[i].key);	// which sublist to put element in 
+		int l = hash(elements[i].key);	// which sublist to put element in 
 		SortedList_insert(&list, &elements[i]);
 	}
 
