@@ -95,14 +95,11 @@ int main(int argc, char **argv)
 	fprintf(stdout, "per operation: %lld ns\n", diff/num_ops);
 
 	if (list_type == MUTEX_LIST)
-		pthread_mutex_destroy(&mutex_lock);
-
-	if (list_type == MUTEX_LIST)
 	{
 		int jx;
 		for (jx = 0; jx < n_lists; jx++)
 		{
-			pthread_mutex_destroy(&mutex_locks[ix]);
+			pthread_mutex_destroy(&mutex_locks[jx]);
 		}
 	}
 }

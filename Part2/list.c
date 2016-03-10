@@ -5,6 +5,7 @@
 #include <string.h>
 #include "SortedList.h"
 #include "list.h"
+#include "parse.h"
 
 pthread_mutex_t* mutex_locks;
 volatile int* locks_m;
@@ -100,10 +101,10 @@ void *list(void* args_ptr)
 	SortedListElement_t *elements = arg_struct->elements;
 
 	// Create sublists
-	SortedList_t* lists; // array of sublists
-	lists = (SortedList_t*)malloc(num_sublists * sizeof(SortedList_t));
+	SortedList_t* lists;
+	lists = (SortedList_t*)malloc(num_lists * sizeof(SortedList_t));
 	int ix;
-	for (ix = 0; ix < num_sublists; ix++)
+	for (ix = 0; ix < num_lists; ix++)
 	{
 		lists[ix].prev = &lists[ix];
   		lists[ix].next = &lists[ix];
@@ -122,13 +123,13 @@ void *list(void* args_ptr)
 	}
 
 	int j;
-	for (j = 0; j < num_sublists; j++)
+	for (j = 0; j < num_lists; j++)
 	{
 		acquire_lock(list_type, j);
 	}
 	// TACO: re-implement _length to add up all sublists
 	int len = SortedList_length(lists);
-	for (j = 0; j < num_sublists; j++)
+	for (j = 0; j < num_lists; j++)
 	{
 		release_lock(list_type, j);
 	}
