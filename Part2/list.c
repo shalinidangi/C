@@ -14,6 +14,7 @@ int hash(const char *key)
 
 	for (; i < len; i++)
 		hash = hash * 31 + key[i];
+	return hash;
 }
 
 /*============= CREATE LIST ELEMENTS ==============
@@ -76,7 +77,7 @@ void *list(void* args_ptr)
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
-		int l = hash(elements[i].key);	// which sublist to put element in 
+		int l = hash(elements[i].key) % num_lists;	// which sublist to put element in 
 		SortedList_insert(&list, &elements[i]);
 	}
 
