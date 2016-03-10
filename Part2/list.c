@@ -17,7 +17,6 @@ unsigned long long hash(const char *key)
 
 	for (; i < len; i++)
 		hash = hash * 31 + key[i];
-	printf("hash function is returning: %u\n", hash);
 	return hash;
 }
 
@@ -112,21 +111,15 @@ void *list(void* args_ptr)
   		lists[ix].key = NULL;
 	}
 
-	printf("Finished creating sublists\n");
-
 	// insert elements into list
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
 		unsigned long long l = hash(elements[i].key) % num_lists;	// which sublist to put element in 
-		printf("has returned this for l: %u\n", l);
-
 		acquire_lock(list_type, l);
 		SortedList_insert(&lists[l], &elements[i]);
 		release_lock(list_type, l);
 	}
-
-	printf("Finished inserting elements\n");
 
 	int j;
 	for (j = 0; j < num_lists; j++)
@@ -139,8 +132,6 @@ void *list(void* args_ptr)
 	{
 		release_lock(list_type, j);
 	}
-
-	printf("Finished taking list len\n");
 
 	for (i = 0; i < num_its; i++)
 	{
