@@ -11,12 +11,13 @@ pthread_mutex_t* mutex_locks;
 volatile int* locks_m;
 SortedList_t* lists;
 
-int hash(const char *key)
+unsigned long long hash(const char *key)
 {
-	int i = 0, hash = 7, len = strlen(key);
+	unsigned long long i = 0, hash = 7, len = strlen(key);
 
 	for (; i < len; i++)
 		hash = hash * 31 + key[i];
+	printf("hash function is returning: %u\n", hash);
 	return hash;
 }
 
@@ -117,7 +118,8 @@ void *list(void* args_ptr)
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
-		int l = hash(elements[i].key) % num_lists;	// which sublist to put element in 
+		unsigned long long l = hash(elements[i].key) % num_lists;	// which sublist to put element in 
+		printf("has returned this for l: %u\n", l);
 
 		acquire_lock(list_type, l);
 		SortedList_insert(&lists[l], &elements[i]);
