@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 		args.ptr = &result;
 		args.num_its = n_iters;
 		args.add_type = add_type;
-
+		args.opt_yield = set_yield;
 		int failure = pthread_create(&threads[i], NULL, add, (void *)(&args));
 
 		if(failure)
@@ -54,7 +54,10 @@ int main(int argc, char **argv)
 			fprintf(stderr,"ERROR: pthread_create() returned: %d\n", failure);
          	exit(EXIT_FAILURE);
 		}
+	}
 
+	for (i = 0; i < n_threads; i++)
+	{
 		pthread_join(threads[i], NULL);
 	}
 

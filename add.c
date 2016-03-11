@@ -1,5 +1,6 @@
 #define _GNU_SOURCE             
 #include <pthread.h>
+#include <stdio.h>
 #include "add.h"
 
 int opt_yield;
@@ -66,6 +67,7 @@ void *add(void *args_ptr)
 	long long *pointer = arg_struct->ptr;
 	long long value = arg_struct->num_its;
 	int add_type = arg_struct->add_type;
+	opt_yield = arg_struct->opt_yield;
 
 	// create function pointer for add()
 	void (*addFxn) (long long *, long long);
@@ -87,5 +89,5 @@ void *add(void *args_ptr)
 		addFxn(pointer, 1);
 
 	for (i = 0; i < value; i++)
-		addFxn(pointer, -1);
+		addFxn(pointer, -1);	
 }

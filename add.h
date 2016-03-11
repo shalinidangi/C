@@ -11,6 +11,7 @@ extern pthread_mutex_t mutex_lock;
 
 typedef struct add_args
 {
+	int opt_yield;		// whether to yield in add()
 	long long *ptr;		// ptr to add value to 		
 	int add_type;		// which add function to call
 	int num_its; 		// number of iterations
