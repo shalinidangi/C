@@ -11,6 +11,7 @@ SOURCES = main.c parse.c add.c parse.h add.h graphs_part1.pdf Makefile
 addtest: $(OBJ)
 	gcc $(CFLAGS) -o $@ $^
 
+dist: lab4-part1-KatherineAspinwallShaliniDangi.tar.gz
 lab4-part1-KatherineAspinwallShaliniDangi.tar.gz:
 	tar -czf $@ $(SOURCES)
 
