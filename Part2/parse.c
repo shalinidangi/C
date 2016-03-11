@@ -88,6 +88,7 @@ void parse(int argc, char **argv)
 				char c = optarg[0];
 				if (c == MUTEX_SYNC || c == SPINLK_SYNC)
 					sync_type = c;
+				break;
 			}
 			case LISTS:
 			{
