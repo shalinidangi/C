@@ -68,7 +68,10 @@ int main(int argc, char **argv)
 			fprintf(stderr,"ERROR: pthread_create() returned: %d\n", failure);
          	exit(EXIT_FAILURE);
 		}
+	}
 
+	for (i = 0; i < n_threads; i++)
+	{
 		pthread_join(threads[i], NULL);
 	}
 

@@ -7,6 +7,8 @@
 #define SPINLK_ADD		3
 #define ATOMIC_ADD		4
 
+#include<pthread.h>
+
 extern pthread_mutex_t mutex_lock;
 
 typedef struct add_args
