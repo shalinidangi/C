@@ -8,8 +8,7 @@ The average time per operation decreases as the number of iterations increases. 
 							QUESTIONS 2.2:  
 =======================================================================
 >>>>>>>> (1) Compare the variation in time per protected operation vs the number of threads in Part 2 and in Part 1. Explain the difference. <<<<<<<<
-
-
+In both Part 1 and Part 2, the time per protected operation goes down as the number of threads increases. However, Part 2 takes more time because the critical sections in the list functions are larger and therefore, take more time.
 
 =======================================================================  
 							QUESTIONS 2.3:  
