@@ -11,6 +11,7 @@ SOURCES = SortedList.c SortedList.h list.c list.h parse.c parse.h main.c Makefil
 sltest: $(OBJ)
 	gcc $(CFLAGS) -o $@ $^
 
+dist: lab4-part2-KatherineAspinwallShaliniDangi.tar.gz
 lab4-part2-KatherineAspinwallShaliniDangi.tar.gz:
 	tar -czf $@ $(SOURCES)
 
