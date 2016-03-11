@@ -1,0 +1,23 @@
+=======================================================================  
+							QUESTIONS 2.1:  
+=======================================================================
+>>>>>>>> (1) Explain the variation in time per operation vs the number of iterations? How would you propose to correct for this effect? <<<<<<<<
+The average time per operation decreases as the number of iterations increases. This is because the overhead from thread creation becomes a smaller fraction of the total cost as the number of iterations increases. We could correct for this effect by determining the total time that the pthread_create calls take and subtracting it from the total time.  Additionally, the variation also occurs because when the program runs with more iterations, branch prediction may improve and cache hits may increase.
+
+=======================================================================  
+							QUESTIONS 2.2:  
+=======================================================================
+>>>>>>>> (1) Compare the variation in time per protected operation vs the number of threads in Part 2 and in Part 1. Explain the difference. <<<<<<<<
+
+
+
+=======================================================================  
+							QUESTIONS 2.3:  
+=======================================================================
+>>>>>>>> (1) Explain the change in performance of the synchronized methods as a function of the number of threads per list. <<<<<<<<
+
+>>>>>>>> (2) Explain why threads per list is a more interesting number than threads (for this particular measurement). <<<<<<<<
+
+
+
+

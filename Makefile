@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = $(OPTIMIZE) -g3 -std=gnu11 -pthread -lrt
 DEPS = parse.h add.h
 OBJ = main.o parse.o add.o
-SOURCES = main.c parse.c add.c parse.h add.h graphs_part1.pdf Makefile
+SOURCES = main.c parse.c add.c parse.h add.h graphs_part1.pdf p1_answers.txt Makefile
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<
