@@ -26,4 +26,4 @@ while(condition) {
 The mutex must be released inside of pthread_cond_wait to avoid the race condition where the while condition is changed right before we are about to block the thread.  It is possible that, in between the pthread_mutex_unlock call and the pthread_cond_wait call, another thread could modify something that changes the value of the while condition to false.  Once again, this would cause the blocked process to be blocked forever.
 
 >>>>>>>> (5) Can this be done in a user-mode implementation of pthread_cond_wait? If so, how? If it can only be implemented by a system call, explain why. <<<<<<<<
-This must be implemented by a system call because pthread_cond_wait requires the kernel in order to maintain the conditional variable and release the lock.
+This must be implemented by a system call because pthread_cond_wait requires the kernel in order to maintain the conditional variable and release the lock. If these operations were done in user mode, we wouldn't have a way to make sure no other threads are operating on the same variables.
