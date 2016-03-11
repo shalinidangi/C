@@ -53,7 +53,12 @@ int main(int argc, char **argv)
 			}
 		}
 	}
-
+	else if (list_type = SPINLK_LIST)
+	{
+		int ix;
+		for (ix = 0; ix < n_lists; ix++)
+			locks_m[ix] = 0;
+	}
 	// create array of preinitialized list elements
 	SortedListElement_t *elements = create_rand_list_elements(n_threads * n_iters);
 
@@ -66,7 +71,7 @@ int main(int argc, char **argv)
 	}
 	
 	// Create sublists
-	lists = (SortedList_t*)malloc(num_lists * sizeof(SortedList_t));
+	lists = (SortedList_t*)malloc(n_lists * sizeof(SortedList_t));
 	if (lists == NULL)
 	{
 		fprintf(stderr,"ERROR: malloc() failed\n");
@@ -74,7 +79,7 @@ int main(int argc, char **argv)
 	}
 
 	int ix;
-	for (ix = 0; ix < num_lists; ix++)
+	for (ix = 0; ix < n_lists; ix++)
 	{
 		lists[ix].prev = &lists[ix];
   		lists[ix].next = &lists[ix];

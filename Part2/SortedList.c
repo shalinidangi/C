@@ -1,6 +1,7 @@
 #define _GNU_SOURCE             
 #include <pthread.h>
 #include <string.h>
+#include <stdio.h>
 #include "SortedList.h"
 #include "parse.h"
 
@@ -9,20 +10,25 @@ int opt_yield;
 
 // insert node in list while maintaining ascending order in list  
 void SortedList_insert(SortedList_t *list, SortedListElement_t *element) 
-{ 
+{
+	if (!list || !element)
+		return;
+
 	SortedListElement_t *p = list; 
 	SortedListElement_t *n = list->next; //first element 
 	// if list is empty, list->next = list 
 	 
+	printf("starting while\n");
 	// find the first node 'n' that is greater than the element 
 	while (n != list) 
-	{ 
+	{
 		if (strcmp(element->key, n->key) <= 0) 
 			break; 
 		p = n; 
 		n = n->next; 
 	} 
 
+	printf("done with while\n");
 	if (opt_yield & INSERT_YIELD)
 		pthread_yield();
 	 
@@ -31,6 +37,7 @@ void SortedList_insert(SortedList_t *list, SortedListElement_t *element)
 	element->next = n; 
 	p->next = element; 
 	n->prev = element; 
+	printf("inserted element\n");
 } 
  
 int SortedList_delete(SortedListElement_t *element) 

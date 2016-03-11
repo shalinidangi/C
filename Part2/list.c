@@ -94,6 +94,7 @@ void release_lock(int list_type, int sublist_ix)
 /* ================= LIST WRAPPER ================== */
 void *list(void* args_ptr)
 {
+	printf("In list function\n");
 	// get parameters from argument struct
 	list_args_t *arg_struct = (list_args_t *)args_ptr;
 	int list_type = arg_struct->list_type;
@@ -105,10 +106,12 @@ void *list(void* args_ptr)
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
-		unsigned long long l = hash(elements[i].key) % num_lists;	// which sublist to put element in 
+		unsigned long long l = hash(elements[i].key) % num_lists;	// which sublist to put element in
+		printf("Inserting element into list %llu\n", l); 
 		acquire_lock(list_type, l);
 		SortedList_insert(&lists[l], &elements[i]);
 		release_lock(list_type, l);
+		printf("Inserted element\n");
 	}
 
 	int j;
