@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = $(OPTIMIZE) -g3 -std=gnu11 -pthread -lrt
 DEPS = parse.h add.h
 OBJ = main.o parse.o add.o
-SOURCES = main.c parse.c add.c parse.h add.h Makefile README.md
+SOURCES = main.c parse.c add.c parse.h add.h graphs_part1.pdf Makefile
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -11,6 +11,7 @@ SOURCES = main.c parse.c add.c parse.h add.h Makefile README.md
 addtest: $(OBJ)
 	gcc $(CFLAGS) -o $@ $^
 
+dist: lab4-part1-KatherineAspinwallShaliniDangi.tar.gz
 lab4-part1-KatherineAspinwallShaliniDangi.tar.gz:
 	tar -czf $@ $(SOURCES)
 
