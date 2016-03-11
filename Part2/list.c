@@ -101,16 +101,6 @@ void *list(void* args_ptr)
 	int num_lists = arg_struct->num_sublists;
 	SortedListElement_t *elements = arg_struct->elements;
 
-	// Create sublists
-	lists = (SortedList_t*)malloc(num_lists * sizeof(SortedList_t));
-	int ix;
-	for (ix = 0; ix < num_lists; ix++)
-	{
-		lists[ix].prev = &lists[ix];
-  		lists[ix].next = &lists[ix];
-  		lists[ix].key = NULL;
-	}
-
 	// insert elements into list
 	int i;
 	for (i = 0; i < num_its; i++)

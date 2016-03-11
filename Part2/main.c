@@ -64,6 +64,22 @@ int main(int argc, char **argv)
 		fprintf(stderr,"ERROR: malloc() failed\n");
         exit(EXIT_FAILURE);
 	}
+	
+	// Create sublists
+	lists = (SortedList_t*)malloc(num_lists * sizeof(SortedList_t));
+	if (lists == NULL)
+	{
+		fprintf(stderr,"ERROR: malloc() failed\n");
+        exit(EXIT_FAILURE);		
+	}
+
+	int ix;
+	for (ix = 0; ix < num_lists; ix++)
+	{
+		lists[ix].prev = &lists[ix];
+  		lists[ix].next = &lists[ix];
+  		lists[ix].key = NULL;
+	}
 
 	clock_gettime(CLOCK_MONOTONIC, &start);
 
