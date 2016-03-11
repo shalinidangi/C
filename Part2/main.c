@@ -28,8 +28,18 @@ int main(int argc, char **argv)
 	}
 
 	mutex_locks = (pthread_mutex_t*)malloc(n_lists * sizeof(pthread_mutex_t));
+	if (mutex_locks == NULL)
+	{
+		fprintf(stderr,"ERROR: malloc() failed\n");
+        exit(EXIT_FAILURE);
+	}
 
 	locks_m = (volatile int*)malloc(n_lists * sizeof(volatile int));
+	if (locks_m == NULL)
+	{
+		fprintf(stderr,"ERROR: malloc() failed\n");
+        exit(EXIT_FAILURE);
+	}
 
 	if (list_type == MUTEX_LIST)
 	{
@@ -48,7 +58,12 @@ int main(int argc, char **argv)
 	SortedListElement_t *elements = create_rand_list_elements(n_threads * n_iters);
 
 	// allocate array to hold threads
-	pthread_t *threads = malloc(sizeof(pthread_t) * n_threads);
+	pthread_t *threads = (pthread_t*)malloc(sizeof(pthread_t) * n_threads);
+	if (threads == NULL)
+	{
+		fprintf(stderr,"ERROR: malloc() failed\n");
+        exit(EXIT_FAILURE);
+	}
 
 	clock_gettime(CLOCK_MONOTONIC, &start);
 
@@ -62,7 +77,6 @@ int main(int argc, char **argv)
 		args.num_sublists = n_lists;
 
 		int failure = pthread_create(&threads[i], NULL, list, (void *)(&args));
-
 		if(failure)
 		{
 			fprintf(stderr,"ERROR: pthread_create() returned: %d\n", failure);
@@ -72,7 +86,12 @@ int main(int argc, char **argv)
 
 	for (i = 0; i < n_threads; i++)
 	{
-		pthread_join(threads[i], NULL);
+		int join_fail = pthread_join(threads[i], NULL);
+		if (join_fail)
+		{
+			fprintf(stderr, "ERRORL pthread_join() returned %d\n", join_fail);
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	// wait for all threads to finish, then get the system time
