@@ -27,7 +27,6 @@ int main(int argc, char **argv)
 		default: 			list_type = BASIC_LIST;	
 	}
 
-	printf("sync-type was %c, list type is %d\n", sync_type, list_type);
 	mutex_locks = (pthread_mutex_t*)malloc(n_lists * sizeof(pthread_mutex_t));
 	if (mutex_locks == NULL)
 	{
@@ -92,14 +91,13 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i < n_threads; i++)
 	{
-		list_args_t args;
-		args.num_its = n_iters;
-		printf("LIST TYPE IS STILL %d\n", list_type);
-		args.list_type = list_type;
-		args.elements = &elements[i * n_iters];
-		args.num_sublists = n_lists;
+		list_args_t* args = (list_args_t*)malloc(sizeof(list_args_t));
+		args->num_its = n_iters;
+		args->list_type = list_type;
+		args->elements = &elements[i * n_iters];
+		args->num_sublists = n_lists;
 
-		int failure = pthread_create(&threads[i], NULL, list, (void *)(&args));
+		int failure = pthread_create(&threads[i], NULL, list, (void *)(args));
 		if(failure)
 		{
 			fprintf(stderr,"ERROR: pthread_create() returned: %d\n", failure);
@@ -114,7 +112,7 @@ int main(int argc, char **argv)
 		int join_fail = pthread_join(threads[i], NULL);
 		if (join_fail)
 		{
-			fprintf(stderr, "ERRORL pthread_join() returned %d\n", join_fail);
+			fprintf(stderr, "ERROR: pthread_join() returned %d\n", join_fail);
 			exit(EXIT_FAILURE);
 		}
 	}
