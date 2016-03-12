@@ -17,8 +17,7 @@ void SortedList_insert(SortedList_t *list, SortedListElement_t *element)
 	SortedListElement_t *p = list; 
 	SortedListElement_t *n = list->next; //first element 
 	// if list is empty, list->next = list 
-	 
-	printf("starting while\n");
+
 	// find the first node 'n' that is greater than the element 
 	while (n != list) 
 	{
@@ -28,7 +27,6 @@ void SortedList_insert(SortedList_t *list, SortedListElement_t *element)
 		n = n->next; 
 	} 
 
-	printf("done with while\n");
 	if (opt_yield & INSERT_YIELD)
 		pthread_yield();
 	 
@@ -37,7 +35,6 @@ void SortedList_insert(SortedList_t *list, SortedListElement_t *element)
 	element->next = n; 
 	p->next = element; 
 	n->prev = element; 
-	printf("inserted element\n");
 } 
  
 int SortedList_delete(SortedListElement_t *element) 
@@ -46,13 +43,13 @@ int SortedList_delete(SortedListElement_t *element)
 	SortedListElement_t *n = element->next; 
 	SortedListElement_t *p = element->prev; 
 	 
+	if (opt_yield & DELETE_YIELD)
+		pthread_yield();
+
 	if (n->prev != element) 
 		return 1; 
 	if (p->next != element) 
 		return 1; 
-	 
-	if (opt_yield & DELETE_YIELD)
-		pthread_yield();
 
 	// delete the element
 	n->prev = p; 
@@ -103,14 +100,11 @@ int SortedList_length(SortedList_t *list)
 			n = c->next;
 
 			// Check all prev/next pointers
-			if (n->prev != c) {
-				printf("sublist #%i is corrupted\n", i); 
+			if (n->prev != c) 
 				return -1; 
-			}
-			if (p->next != c) {
-				printf("sublist #%i is corrupted\n", i);
+			if (p->next != c)
 				return -1;
-			}
+			
 			count++;
 			p = c;
 			c = n;

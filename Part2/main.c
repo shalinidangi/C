@@ -126,9 +126,9 @@ int main(int argc, char **argv)
 	long long diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
 
 	// print number of operations
-	long num_ops = n_threads * n_iters * 2 * 50;
+	long num_ops = n_threads * n_iters * 2 * 5;
 
-	fprintf(stdout, "%d threads x %d iterations x (insert + lookup/delete) x (100/2 avg len) = %ld operations\n",
+	fprintf(stdout, "%d threads x %d iterations x (insert + lookup/delete) x (10/2 avg len) = %ld operations\n",
 		n_threads,
 		n_iters,
 		num_ops);

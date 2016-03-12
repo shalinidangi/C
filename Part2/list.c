@@ -67,12 +67,10 @@ void acquire_lock(int list_type, int sublist_ix)
 	}
 	else if (list_type == MUTEX_LIST)
 	{
-		printf("Acq mutex lock\n");
 		pthread_mutex_lock(&mutex_locks[sublist_ix]);
 	}
 	else if (list_type == SPINLK_LIST)
 	{
-		printf("Acq spin lock\n");
 		while(__sync_lock_test_and_set(&locks_m[sublist_ix], 1));
 	}
 }
@@ -85,12 +83,10 @@ void release_lock(int list_type, int sublist_ix)
 	}
 	else if (list_type == MUTEX_LIST)
 	{
-		printf("Releasing mutex lock\n");
 		pthread_mutex_unlock(&mutex_locks[sublist_ix]);
 	}
 	else if (list_type == SPINLK_LIST)
 	{
-		printf("Releasing spinlk\n");
 		__sync_lock_release(&locks_m[sublist_ix]);
 	}
 }
@@ -98,7 +94,6 @@ void release_lock(int list_type, int sublist_ix)
 /* ================= LIST WRAPPER ================== */
 void *list(void* args_ptr)
 {
-	printf("In list function\n");
 	// get parameters from argument struct
 	list_args_t *arg_struct = (list_args_t *)args_ptr;
 	int list_type = arg_struct->list_type;
@@ -106,17 +101,14 @@ void *list(void* args_ptr)
 	int num_lists = arg_struct->num_sublists;
 	SortedListElement_t *elements = arg_struct->elements;
 
-	printf("List type: %d\n", list_type);
 	// insert elements into list
 	int i;
 	for (i = 0; i < num_its; i++)
 	{
 		unsigned long long l = hash(elements[i].key) % num_lists;	// which sublist to put element in
-		printf("Inserting element into list %llu\n", l); 
 		acquire_lock(list_type, l);
 		SortedList_insert(&lists[l], &elements[i]);
 		release_lock(list_type, l);
-		printf("Inserted element\n");
 	}
 
 	int j;
@@ -127,7 +119,7 @@ void *list(void* args_ptr)
 	// TACO: re-implement _length to add up all sublists
 	int len = SortedList_length(lists);
 	if (len == -1)
-		printf("length() detected that a list is corrupted\n");
+		fprintf(stderr, "ERROR: length detected that a list is corrupted\n");
 	for (j = 0; j < num_lists; j++)
 	{
 		release_lock(list_type, j);
@@ -141,7 +133,7 @@ void *list(void* args_ptr)
 		SortedListElement_t *victim = SortedList_lookup(&lists[l], elements[i].key);
 		int res = SortedList_delete(victim);
 		if (res == 1)
-			printf("delete() detected that a list is corrupted\n");
+			fprintf(stderr, "ERROR: delete detected that a list is corrupted\n");
 		release_lock(list_type, l);
 	}	
 }
