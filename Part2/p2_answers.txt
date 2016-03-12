@@ -19,8 +19,10 @@ In both Part 1 and Part 2, the time per protected operation goes down as the num
 							QUESTIONS 2.3:  
 =======================================================================
 >>>>>>>> (1) Explain the change in performance of the synchronized methods as a function of the number of threads per list. <<<<<<<<
+As the number of threads per list increases, the average time per operation increases as well. This is because there is more time spent waiting for access to locks.  Additionally, there is more overhead from thread creation.
 
 >>>>>>>> (2) Explain why threads per list is a more interesting number than threads (for this particular measurement). <<<<<<<<
+Threads per list is more interesting because each list is essentially a shared "variable" and the more lists there are the less time threads are spent waiting for access to different locks.  This is because there are less write overlaps because the work among threads is more spread out.
 
 
 
