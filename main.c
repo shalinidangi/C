@@ -86,5 +86,5 @@ int main(int argc, char **argv)
 	if (add_type == MUTEX_ADD)
 		pthread_mutex_destroy(&mutex_lock);
 
-	
+	exit(EXIT_SUCCESS);	
 }
