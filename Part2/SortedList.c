@@ -103,11 +103,14 @@ int SortedList_length(SortedList_t *list)
 			n = c->next;
 
 			// Check all prev/next pointers
-			if (n->prev != c) 
+			if (n->prev != c) {
+				printf("sublist #%i is corrupted\n", i); 
 				return -1; 
-			if (p->next != c) 
+			}
+			if (p->next != c) {
+				printf("sublist #%i is corrupted\n", i);
 				return -1;
-
+			}
 			count++;
 			p = c;
 			c = n;

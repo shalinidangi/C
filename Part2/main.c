@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 			}
 		}
 	}
-	else if (list_type = SPINLK_LIST)
+	else if (list_type == SPINLK_LIST)
 	{
 		int ix;
 		for (ix = 0; ix < n_lists; ix++)
@@ -105,10 +105,10 @@ int main(int argc, char **argv)
 			fprintf(stderr,"ERROR: pthread_create() returned: %d\n", failure);
          	exit(EXIT_FAILURE);
 		}
-		pthread_join(threads[i], NULL);
+		//pthread_join(threads[i], NULL);
 	}
 
-/*
+
 	for (i = 0; i < n_threads; i++)
 	{
 		int join_fail = pthread_join(threads[i], NULL);
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 			exit(EXIT_FAILURE);
 		}
 	}
-*/
+
 	// wait for all threads to finish, then get the system time
 	int status;
 	for (i = 0; i < n_threads; i++)
@@ -150,5 +150,6 @@ int main(int argc, char **argv)
 			pthread_mutex_destroy(&mutex_locks[jx]);
 		}
 	}
+	exit(0);
 }
 

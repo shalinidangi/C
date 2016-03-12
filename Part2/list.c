@@ -126,6 +126,8 @@ void *list(void* args_ptr)
 	}
 	// TACO: re-implement _length to add up all sublists
 	int len = SortedList_length(lists);
+	if (len == -1)
+		printf("length() detected that a list is corrupted\n");
 	for (j = 0; j < num_lists; j++)
 	{
 		release_lock(list_type, j);
@@ -137,7 +139,9 @@ void *list(void* args_ptr)
 
 		acquire_lock(list_type, l);
 		SortedListElement_t *victim = SortedList_lookup(&lists[l], elements[i].key);
-		SortedList_delete(victim);
+		int res = SortedList_delete(victim);
+		if (res == 1)
+			printf("delete() detected that a list is corrupted\n");
 		release_lock(list_type, l);
 	}	
 }
