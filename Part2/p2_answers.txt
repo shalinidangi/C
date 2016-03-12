@@ -2,7 +2,9 @@
 							QUESTIONS 2.1:  
 =======================================================================
 >>>>>>>> (1) Explain the variation in time per operation vs the number of iterations? How would you propose to correct for this effect? <<<<<<<<
-The average time per operation decreases as the number of iterations increases. This is because the overhead from thread creation becomes a smaller fraction of the total cost as the number of iterations increases. We could correct for this effect by determining the total time that the pthread_create calls take and subtracting it from the total time.  Additionally, the variation also occurs because when the program runs with more iterations, branch prediction may improve and cache hits may increase.
+The average time per operation decreases as the number of iterations increases up to 100. This is because the overhead from thread creation becomes a smaller fraction of the total cost as the number of iterations increases. We could correct for this effect by determining the total time that the pthread_create calls take and subtracting it from the total time.  Additionally, the variation also occurs because when the program runs with more iterations, branch prediction may improve and cache hits may increase.
+
+With the number of iterations larger than 100, the time per operation increases. This is because the size of the lists grows and therefore, he insert and lookup function take longer to iterate through the list.  This can be accounted for by plotting the average time per operation against the size of the list.
 
 =======================================================================  
 							QUESTIONS 2.2:  
