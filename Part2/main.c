@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 {
 	struct timespec start, end;
 	
-	int list_type;
+	int list_type = BASIC_LIST;
 	parse(argc, argv);
 
 	switch (sync_type)
@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 		default: 			list_type = BASIC_LIST;	
 	}
 
+	printf("sync-type was %c, list type is %d\n", sync_type, list_type);
 	mutex_locks = (pthread_mutex_t*)malloc(n_lists * sizeof(pthread_mutex_t));
 	if (mutex_locks == NULL)
 	{
@@ -93,6 +94,7 @@ int main(int argc, char **argv)
 	{
 		list_args_t args;
 		args.num_its = n_iters;
+		printf("LIST TYPE IS STILL %d\n", list_type);
 		args.list_type = list_type;
 		args.elements = &elements[i * n_iters];
 		args.num_sublists = n_lists;
@@ -103,8 +105,10 @@ int main(int argc, char **argv)
 			fprintf(stderr,"ERROR: pthread_create() returned: %d\n", failure);
          	exit(EXIT_FAILURE);
 		}
+		pthread_join(threads[i], NULL);
 	}
 
+/*
 	for (i = 0; i < n_threads; i++)
 	{
 		int join_fail = pthread_join(threads[i], NULL);
@@ -114,7 +118,7 @@ int main(int argc, char **argv)
 			exit(EXIT_FAILURE);
 		}
 	}
-
+*/
 	// wait for all threads to finish, then get the system time
 	int status;
 	for (i = 0; i < n_threads; i++)

@@ -67,10 +67,12 @@ void acquire_lock(int list_type, int sublist_ix)
 	}
 	else if (list_type == MUTEX_LIST)
 	{
+		printf("Acq mutex lock\n");
 		pthread_mutex_lock(&mutex_locks[sublist_ix]);
 	}
 	else if (list_type == SPINLK_LIST)
 	{
+		printf("Acq spin lock\n");
 		while(__sync_lock_test_and_set(&locks_m[sublist_ix], 1));
 	}
 }
@@ -83,10 +85,12 @@ void release_lock(int list_type, int sublist_ix)
 	}
 	else if (list_type == MUTEX_LIST)
 	{
+		printf("Releasing mutex lock\n");
 		pthread_mutex_unlock(&mutex_locks[sublist_ix]);
 	}
 	else if (list_type == SPINLK_LIST)
 	{
+		printf("Releasing spinlk\n");
 		__sync_lock_release(&locks_m[sublist_ix]);
 	}
 }
@@ -102,6 +106,7 @@ void *list(void* args_ptr)
 	int num_lists = arg_struct->num_sublists;
 	SortedListElement_t *elements = arg_struct->elements;
 
+	printf("List type: %d\n", list_type);
 	// insert elements into list
 	int i;
 	for (i = 0; i < num_its; i++)
